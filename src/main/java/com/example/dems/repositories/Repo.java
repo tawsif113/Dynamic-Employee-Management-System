@@ -23,5 +23,4 @@ public interface Repo extends JpaRepository<Data, Long> {
     List<Data>findEmployeesByNameOrDepartment(String name, String department);
 
 
-
 }

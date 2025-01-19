@@ -1,4 +1,4 @@
-package com.example.dems.utilsClass;
+package com.example.dems.config;
 
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

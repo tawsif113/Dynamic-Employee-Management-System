@@ -22,7 +22,7 @@ public class Controller {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<Data> createEmployee(@Valid @RequestBody Data data){
         return new ResponseEntity<>(service.createEmployee(data), HttpStatus.CREATED);
     }
@@ -37,12 +37,8 @@ public class Controller {
         return new ResponseEntity<>(service.getEmployeeById(id).orElseThrow(()->new NotFound("Employee Not Found")), HttpStatus.OK);
     }
 
-//    @GetMapping("/skill/{skill}")
-//    public ResponseEntity<List<Data>> getEmployeesBySkill(@PathVariable String skill){
-//        return new ResponseEntity<>(service.getEmployeesBySkill(skill), HttpStatus.OK);
-//    }
 
-    @GetMapping("/findBy")
+    @GetMapping("/filter")
     public ResponseEntity<List<Data>> getEmployeesBySkillAndCertification(@RequestParam(required = false,defaultValue = "") String skill,
                                                                           @RequestParam(required = false,defaultValue = "") String certification){
         return new ResponseEntity<>(service.getEmployeesBySkillAndCertification(skill, certification), HttpStatus.OK);
@@ -53,10 +49,10 @@ public class Controller {
         return new ResponseEntity<>(service.updateEmployee(id, data), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEmployee(@PathVariable Long id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable Long id){
         service.deleteEmployee(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Done Deletion",HttpStatus.OK);
     }
 
     @GetMapping("/rank")
