@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class Controller {
         return new ResponseEntity<>(service.getEmployeesBySkillAndCertification(skill, certification), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Data> updateEmployee(@PathVariable Long id, @RequestBody Data data){
         return new ResponseEntity<>(service.updateEmployee(id, data), HttpStatus.OK);
     }
