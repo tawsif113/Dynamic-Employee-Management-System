@@ -9,7 +9,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * GlobalExceptionHandler is a controller advice which handles exceptions thrown by the application.
+ * It captures the following exceptions:
+ * <ul>
+ *     <li>NotFound: returns a 404 response with a message</li>
+ *     <li>MethodArgumentNotValidException: returns a 400 response with a map of field errors</li>
+ *     <li>ConstraintViolationException: returns a 400 response with a map of field errors</li>
+ *     <li>Exception: returns a 500 response with a message</li>
+ * </ul>
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 

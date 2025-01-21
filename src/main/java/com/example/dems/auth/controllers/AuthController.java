@@ -12,6 +12,10 @@ import com.example.dems.auth.utils.JwtUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,13 +31,15 @@ public class AuthController {
     private RoleRepository roleRepository;
     private PasswordEncoder encoder;
     private JwtUtils jwtUtils;
+    private AuthenticationManager authManager;
 
     @Autowired
-    public AuthController(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
+    public AuthController(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils, AuthenticationManager authManager) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
+        this.authManager = authManager;
     }
 
     @PostMapping("/register")
@@ -60,14 +66,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request){
-
-        User user = userRepository.findByUsername(request.getUsername()).orElseThrow(()->new RuntimeException("User not Found"));
-
-        if(!encoder.matches(request.getPassword(), user.getPassword())) {
-            return ResponseEntity.badRequest().body("Invalid Credentials");
-        }
-
-        String token = jwtUtils.generateToken(user.getUsername());
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtUtils.generateToken(authentication.getName());
         return ResponseEntity.ok(new JwtResponse(token));
 
     }

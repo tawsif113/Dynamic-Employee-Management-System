@@ -9,7 +9,28 @@ import org.hibernate.annotations.Type;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Map;
-
+/**
+ * The Data class represents an employee entity with various attributes such as
+ * name, designation, department, joining date, salary, and skills. It is
+ * annotated as an Entity and mapped to the "employees" table in the database.
+ *
+ * <p>
+ * Attributes:
+ * <ul>
+ * <li>id: The unique identifier for the employee. It is auto-generated.</li>
+ * <li>name: The name of the employee. Cannot be blank.</li>
+ * <li>designation: The designation of the employee. Cannot be blank.</li>
+ * <li>department: The department to which the employee belongs. Cannot be blank.</li>
+ * <li>joiningDate: The date when the employee joined. Cannot be null.</li>
+ * <li>salary: The salary of the employee. Cannot be null.</li>
+ * <li>skills: The skills of the employee stored as a JSON object.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * The class implements Serializable to allow instances to be serialized.
+ * </p>
+ */
 @Entity
 @Table(name = "employees")
 public class Data implements Serializable {

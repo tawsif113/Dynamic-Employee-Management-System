@@ -7,7 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+/**
+ * This Repository is used to interact with the Database
+ * It is used to retrieve data from the Database
+ * It extends the JpaRepository which provides methods like findAll, findById, save and delete
+ * The methods in this interface are used to query the database
+ * The methods are annotated with @Query to specify the query to be executed
+ */
 @Repository
 public interface Repo extends JpaRepository<Data, Long> {
 
